@@ -34,7 +34,7 @@
                                                     </button>
                                                 </h2>
                                             @else
-                                                <a href="" class="nav-item nav-link">{{ $category->name }}</a>
+                                                <a href="{{ route('front.shop') }}" class="nav-item nav-link">{{ $category->name }}</a>
                                             @endif
                                             @if ($category->sub_category->isNotEmpty())
                                                 @foreach ($category->sub_category as $subCategory)
@@ -153,7 +153,14 @@
                                 <div class="col-md-4">
                                     <div class="card product-card">
                                         <div class="product-image position-relative">
-                                            <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
+                                            <a href="#" class="product-img">
+                                                @if (!empty($productImage->image))
+                                                    <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
+                                                @else
+                                                    <img class="card-img-top" src="{{ asset('admin-assets/img/default-150x150.png') }}">
+                                                @endif
+                                            </a>
+                                            
                                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
 
                                             <div class="product-action">
@@ -166,7 +173,6 @@
                                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                             <div class="price mt-2">
                                                 <span class="h5"><strong>{{ $product->price }}</strong></span>
-
                                                 @if ($product->compare_price > 0)
                                                     <span class="h6 text-underline"><del>{{ $product->compare_price }}</del></span>
                                                 @endif

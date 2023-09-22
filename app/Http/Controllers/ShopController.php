@@ -61,7 +61,7 @@ class ShopController extends Controller
             $products = $products->orderBy('id', 'DESC');
         }
 
-        $products = $products->get();
+        $products = $products->paginate(6);
 
         $data['categories'] = $categories;
         $data['brands'] = $brands;
@@ -74,5 +74,18 @@ class ShopController extends Controller
         $data['sort'] = $request->get('sort');
 
         return view('front.shop', $data);
+    }
+
+    public function product($slug) {
+        // echo $slug;
+        $product = Product::where('slug', $slug)->with('product_images')->first();
+
+        if ($product == null) {
+            abort(404);
+        }
+
+        $data['product'] = $product;
+
+        return view('front.product', $data);
     }
 }

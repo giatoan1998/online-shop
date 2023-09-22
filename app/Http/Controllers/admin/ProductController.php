@@ -18,7 +18,7 @@ class ProductController extends Controller
 {
     public function index(Request $request) {
         $products = Product::latest('id')->with('product_images');
-        
+
         if ($request->get('keyword') != "") {
             $products = $products->where('title','like','%'.$request->keyword.'%');
         }
@@ -71,6 +71,8 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_feature = $request->is_featured;
+            $product->shipping_returns = $request->shipping_returns;
+            $product->short_description = $request->short_description;
             $product->save();
 
             // Save Gallery Pics
@@ -79,7 +81,7 @@ class ProductController extends Controller
                     $tempImageInfo = TempImage::find($temp_image_id);
                     $extArray = explode('.', $tempImageInfo->name);
                     $ext = last($extArray); // like jpg, gif, png etc
-                    
+
                     $productImage = new ProductImage();
                     $productImage->product_id = $product->id;
                     $productImage->image = 'NULL';
@@ -103,7 +105,7 @@ class ProductController extends Controller
                         $constraint->aspectRatio();
                     });
                     $image->save($destPath);
-                    
+
                     // Small Image
                     $destPath = public_path().'/uploads/product/small/'.$imageName;
                     $image = Image::make($sourcePath);
@@ -128,11 +130,11 @@ class ProductController extends Controller
     }
 
     public function edit($id, Request $request) {
-        
+
         $product = Product::find($id);
-        
+
         if (empty($product)) {
-            
+
             return redirect()->route('products.index')->with('error', 'Product not found!');
         }
         // Fetch Product Images
@@ -185,6 +187,8 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_feature = $request->is_featured;
+            $product->shipping_returns = $request->shipping_returns;
+            $product->short_description = $request->short_description;
             $product->save();
 
             // Save Gallery Pics
@@ -216,7 +220,7 @@ class ProductController extends Controller
         }
 
         $productImages = ProductImage::where('product_id', $id)->get();
-        
+
         if (!empty($productImages)) {
             foreach ($productImages as $productImage) {
                 File::delete(public_path('uploads/product/large/'.$productImage->image));

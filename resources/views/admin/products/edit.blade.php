@@ -143,6 +143,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h2 class="h4 mb-3">Related Products</h2>
+                                <div class="mb-3">
+                                    <select multiple name="related_products[]" id="related_products" class="related-product w-100">
+                                        @if (!empty($relatedProducts))
+                                            @foreach ($relatedProducts as $relProduct)
+                                                <option selected value="{{ $relProduct->id }}">{{ $relProduct->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <p class="error"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card mb-3">
@@ -208,12 +223,12 @@
                                         <option {{ ($product->is_feature == 'No') ? 'selected' : '' }} value="No">No</option>
                                         <option {{ ($product->is_feature == 'Yes') ? 'selected' : '' }} value="Yes">Yes</option>
                                     </select>
+                                    <p class="error"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="pb-5 pt-3">
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('products.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
@@ -227,6 +242,22 @@
 
 @section('customJs')
     <script>
+        $('.related-product').select2({
+            ajax: {
+                url: '{{ route("products.getProducts") }}',
+                dataType: 'json',
+                tags: true,
+                multiple: true,
+                minimumInputLength: 3,
+                processResults: function (data) {
+                    return {
+                        results: data.tags
+                    };
+                }
+            }
+        });
+
+
         $('#title').change(function () {
             element = $(this);
             $('button[type=submit]').prop('disabled', true);

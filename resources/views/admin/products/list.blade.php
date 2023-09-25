@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
-<section class="content-header">					
+<section class="content-header">
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -28,7 +28,7 @@
                     <div class="card-tools">
                         <div class="input-group input-group" style="width: 250px;">
                             <input type="text" value="{{ Request::get('keyword') }}" name="keyword" class="form-control float-right" placeholder="Search">
-                            
+
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default">
                                     <i class="fas fa-search"></i>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </form>
-            <div class="card-body table-responsive p-0">								
+            <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -57,7 +57,7 @@
                             @foreach ($products as $product)
                             @php
                                 $productImage = $product->product_images->first();
-                            @endphp 
+                            @endphp
                                 <tr>
                                     <td>{{ $product->id }}</td>
                                     <td>
@@ -69,7 +69,7 @@
                                     </td>
                                     <td><a href="#">{{ $product->title }}</a></td>
                                     <td>{{ $product->price }}</td>
-                                    <td>{{ $product->qty }}</td>
+                                    <td>{{ $product->qty }} left in Stock</td>
                                     <td>{{ $product->sku }}</td>
                                     <td>
                                         @if($product->status == 1)
@@ -102,7 +102,7 @@
                             </tr>
                         @endif
                     </tbody>
-                </table>										
+                </table>
             </div>
             <div class="card-footer clearfix">
                 {{ $products->links() }}
@@ -137,7 +137,7 @@
                 //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 // },
                 success: function(response) {
-    
+
                     if (response['status'] == true) {
                         window.location.href="{{ route('products.index') }}";
                     } else {

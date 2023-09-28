@@ -15,7 +15,7 @@
                     <a href="dashboard.html" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
-                    </a>																
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('categories.index') }}" class="nav-link">
@@ -43,14 +43,14 @@
                         <p>Products</p>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('shipping.create') }}" class="nav-link">
                         <!-- <i class="nav-icon fas fa-tag"></i> -->
                         <i class="fas fa-truck nav-icon"></i>
                         <p>Shipping</p>
                     </a>
-                </li>							
+                </li>
                 <li class="nav-item">
                     <a href="orders.html" class="nav-link">
                         <i class="nav-icon fas fa-shopping-bag"></i>
@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="discount.html" class="nav-link">
+                    <a href="{{ route('coupons.index') }}" class="nav-link">
                         <i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
                         <p>Discount</p>
                     </a>
@@ -74,7 +74,7 @@
                         <i class="nav-icon  far fa-file-alt"></i>
                         <p>Pages</p>
                     </a>
-                </li>							
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

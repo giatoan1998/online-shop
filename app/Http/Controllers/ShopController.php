@@ -48,6 +48,10 @@ class ShopController extends Controller
             }
         }
 
+        if (!empty($request->search)) {
+            $products = $products->where('title', 'like', '%'.$request->get('search').'%');
+        }
+
         if ($request->get('sort') != '') {
 
             if ($request->get('sort') == 'latest') {

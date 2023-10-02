@@ -204,6 +204,13 @@
         url += '&price_min='+slider.result.from+'&price_max=' + slider.result.to;
 
         // Sorting filter
+
+        var keyword = $("#search").val();
+
+        if (keyword.length > 0) {
+            url += '&search='+keyword;
+        }
+
         url += '&sort='+$("#sort").val();
 
         window.location.href = url;

@@ -56,7 +56,22 @@
 
                         <h2 class="price ">${{ $product->price }}</h2>
                         {!! $product->short_description !!}
-                        <a href="javascript:void(0);" onclick="addToCart({{ $product->id }})" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO CART</a>
+                        @if ($product->track_qty == 'Yes')
+
+                            @if ($product->qty > 0)
+                                <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $product->id }})">
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                </a>
+                            @else
+                                <a class="btn btn-dark" href="javascript:void(0);">
+                                    Out Of Stock
+                                </a>
+                            @endif
+                        @else
+                            <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $product->id }})">
+                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                            </a>
+                        @endif
                     </div>
                 </div>
 
@@ -116,9 +131,22 @@
                                     <a onclick="addToWishList({{ $product->id }})" class="whishlist" href="javascript:void(0);"><i class="far fa-heart"></i></a>
 
                                     <div class="product-action">
-                                        <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $product->id }})">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>
+                                        @if ($relProduct->track_qty == 'Yes')
+
+                                            @if ($relProduct->qty > 0)
+                                                <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $relProduct->id }})">
+                                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                </a>
+                                            @else
+                                                <a class="btn btn-dark" href="javascript:void(0);">
+                                                    Out Of Stock
+                                                </a>
+                                            @endif
+                                        @else
+                                            <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $relProduct->id }})">
+                                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body text-center mt-3">

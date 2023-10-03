@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\ProductImageController;
@@ -156,13 +157,21 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/orders/change-status/{id}', [OrderController::class, 'changeOrderStatusForm'])->name('orders.changeOrderStatusForm');
         Route::post('/orders/send-email/{id}', [OrderController::class, 'sendInvoiceEmail'])->name('orders.sendInvoiceEmail');
 
-        // User Route
+        // User Routes
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
         Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.delete');
+
+        // Page Routes
+        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
+        Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
+        // Route::get('/pages/{user}/edit', [PageController::class, 'edit'])->name('pages.edit');
+        // Route::put('/pages/{user}', [PageController::class, 'update'])->name('pages.update');
+        // Route::delete('/pages/{user}', [PageController::class, 'destroy'])->name('pages.delete');
 
         // temp-images.create
         Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');

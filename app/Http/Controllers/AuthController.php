@@ -11,6 +11,7 @@ use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -243,5 +244,52 @@ class AuthController extends Controller
                 'status' => true,
             ]);
         }
+    }
+
+    public function showChangePasswordForm() {
+
+        return view('front.account.change-password');
+    }
+
+    public function changePassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required|min:5',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+
+        if ($validator->passes()) {
+
+            $user = User::select('id', 'password')->where('id', Auth::user()->id)->first();
+
+            if (!Hash::check($request->old_password, $user->password)) {
+
+                Session()->flash('error', 'Your old password is incorrect, please try again.');
+
+                return response()->json([
+                    'status' => true,
+                    'errors' => $validator->errors(),
+                ]);
+            }
+
+            User::where('id', $user->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+
+            Session()->flash('success', 'You have successfully changed your password.');
+
+            return response()->json([
+                'status' => true,
+            ]);
+
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        return view('front.account.change-password');
     }
 }

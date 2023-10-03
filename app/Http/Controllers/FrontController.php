@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -60,6 +61,18 @@ class FrontController extends Controller
         return response()->json([
             'status' => true,
             'message' => '<div class="alert alert-success"><strong>"'.$product->title.'"</strong> added in your wishlist</div>',
+        ]);
+    }
+
+    public function page($slug) {
+        $page = Page::where('slug', $slug)->first();
+
+        if ($page == null) {
+            abort(404);
+        }
+
+        return view('front.page', [
+            'page' => $page,
         ]);
     }
 }

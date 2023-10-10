@@ -74,13 +74,14 @@ class AuthController extends Controller
 
                 if (session()->has('url.intended')) {
 
+                    $sss = session()->has('url.intended');
+                    echo $sss;
+
                     return redirect(session()->get('url.intended'));
                 }
 
-
                 return redirect()->route('account.profile');
             } else {
-                //session()->flash('error', 'Either email/password is incorrect!');
 
                 return redirect()->route('account.login')
                 ->withInput($request->only('email'))

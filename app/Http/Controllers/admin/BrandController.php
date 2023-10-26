@@ -39,6 +39,8 @@ class BrandController extends Controller
             $brand->status = $request->status;
             $brand->save();
 
+            session()->flash('success', 'Brand added successfully.');
+
             return response()->json([
                 'status' => true,
                 'message' => 'Brand added successfully.',
@@ -97,6 +99,28 @@ class BrandController extends Controller
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors(),
+            ]);
+        }
+    }
+
+    public function destroy($id) {
+        $brand = Brand::find($id);
+
+        if (empty($brand)) {
+            session()->flash('error', 'Record not found.');
+
+            return response()->json([
+                'status' => true,
+                'errors' => 'Record not found.'
+            ]);
+        } else {
+            $brand->delete();
+
+            session()->flash('success', 'Brand deleted successfully');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Brand deleted successfully',
             ]);
         }
     }

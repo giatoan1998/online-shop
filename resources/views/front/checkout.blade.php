@@ -17,6 +17,9 @@
     <div class="container">
         <form id="orderForm" name="orderForm" action="" method="post">
             <div class="row">
+                <div class="col-md-12">
+                    @include('front.account.common.message')
+                </div>
                 <div class="col-md-8">
                     <div class="sub-title">
                         <h2>Shipping Address</h2>
@@ -333,6 +336,7 @@
                                 .removeClass("invalid-feedback")
                                 .html('');
                         }
+                        window.location.href = "{{ route('front.checkout') }}";
                     } else {
                         window.location.href = "{{ url('/thanks/') }}/" + response.orderId;
                     }

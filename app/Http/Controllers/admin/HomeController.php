@@ -40,7 +40,7 @@ class HomeController extends Controller
 
         // Last 15 days sale
 
-        $date = Carbon::now()->subDay(8)->format('Y-m-d');
+        $date = Carbon::now()->subDay(6)->format('Y-m-d');
 
         $revenueLastFifteenDays = Order::where('status', '!=', 'cancelled')
             ->whereDate('created_at', '>=', $date)

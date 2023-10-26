@@ -99,15 +99,12 @@
                                     <div>Subtotal</div>
                                     <div>${{ Cart::subtotal() }}</div>
                                 </div>
+
                                 <div class="pt-2">
                                     <a href="{{ route('front.checkout') }}" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="input-group apply-coupan mt-4">
-                            <input type="text" placeholder="Coupon Code" class="form-control">
-                            <button class="btn btn-dark" type="button" id="button-addon2">Apply Coupon</button>
-                        </div> --}}
                     </div>
                 @else
                     <div class="col-md-12">

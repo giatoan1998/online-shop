@@ -94,8 +94,11 @@ class CartController extends Controller
                 Session()->flash('message', $message);
             } else {
                 $message = "Requested quantity $qty not available in stock";
-                $status = false;
                 session()->flash('error', $message);
+                return response()->json([
+                    'message' => $message,
+                    'status' => false,
+                ]);
             }
         } else {
             Cart::update($rowId, $qty);
@@ -191,7 +194,10 @@ class CartController extends Controller
                 $totalQty += $item->qty;
             }
 
-            $totalShippingCharge = $totalQty*$shippingInfo->amount;
+            if ($shippingInfo) {
+                $totalShippingCharge = $totalQty*$shippingInfo->amount;
+            }
+
             $grandTotal = ($subTotal - $discount) + $totalShippingCharge;
         } else {
             $grandTotal = ($subTotal - $discount);
@@ -341,9 +347,20 @@ class CartController extends Controller
 
                 if ($productData->track_qty == 'Yes') {
                     $currentQty = $productData->qty;
-                    $updatedQty = $currentQty - $item->qty;
-                    $productData->qty = $updatedQty;
-                    $productData->save();
+
+                    if ($currentQty >= $item->qty) {
+                        $updatedQty = $currentQty - $item->qty;
+                        $productData->qty = $updatedQty;
+                        $productData->save();
+                    } else {
+                        $message = 'This item is not enough!';
+                        session()->flash('error', $message);
+
+                        return response()->json([
+                            'status' => false,
+                            'message' => $message,
+                        ]);
+                    }
                 }
             }
 

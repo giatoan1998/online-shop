@@ -201,6 +201,8 @@ class AuthController extends Controller
     public function orders() {
         $user = Auth::user();
         $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
+        // DESCending giảm dần, nghĩa là bản ghi mới nhất sẽ được hiển thị trước.
+        // ASCending tăng dần, nghĩa là bản ghi cũ nhất sẽ được hiển thị trước.
         $data['orders'] = $orders;
 
         return view('front.account.order', $data);
